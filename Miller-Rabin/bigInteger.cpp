@@ -2,7 +2,7 @@
 using namespace std;
 
 /* 
- * overload "+, -, *, /, %" by bigInteger
+ * overload "+, -, *, /, %, <, <=, >, >=" by bigInteger
  * bigInteger is represented by string
  */
 bool operator < (const string &a, const string &b);
