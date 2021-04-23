@@ -2,7 +2,10 @@
 #define int128 string
 using namespace std;
 
-int cmp(string A, string B);
+bool operator < (const string &a, const string &b);
+bool operator <= (const string &a, const string &b);
+bool operator > (const string &a, const string &b);
+bool operator >= (const string &a, const string &b);
 string operator + (const string& a, const string& b);
 string operator - (const string& a, const string& b);
 string operator * (const string& a, const string& b);
@@ -24,17 +27,80 @@ int main()
     return 0;
 }
 
-int cmp(string A, string B)
+bool operator < (const string &a, const string &b)
 {
-    if (A.length() < B.length()) return -1;
-    else if (A.length() > B.length()) return 1;
+    if (a[0] == '-' && b[0] != '-') return 1; // negative < positive
+    else if (a[0] != '-' && b[0] == '-') return 0; // positive > negative
     else {
-        for (int i = 0; i < A.length(); ++i) {
-            if (A[i] < B[i]) return -1;
-            else if (A[i] > B[i]) return 1;
+        int flag = (a[0] == '-') ? 0 : 1;
+        string A = (a[0] == '-') ? a.substr(1, a.length()) : a.substr(0, a.length());
+        string B = (b[0] == '-') ? b.substr(1, b.length()) : b.substr(0, b.length());
+        if (a.length() < b.length()) return flag;
+        else if (a.length() > b.length()) return flag ^ 1;
+        for (int i = 0; i < a.length(); ++i) {
+            if (a[i] < b[i]) return flag;
+            else if (a[i] > b[i]) return flag ^ 1;
+            else continue;
         }
-        return 0;
     }
+    return 0;
+}
+
+bool operator <= (const string &a, const string &b)
+{
+    if (a[0] == '-' && b[0] != '-') return 1; // negative <= positive
+    else if (a[0] != '-' && b[0] == '-') return 0; // positive >= negative
+    else {
+        int flag = (a[0] == '-') ? 0 : 1;
+        string A = (a[0] == '-') ? a.substr(1, a.length()) : a.substr(0, a.length());
+        string B = (b[0] == '-') ? b.substr(1, b.length()) : b.substr(0, b.length());
+        if (a.length() < b.length()) return flag;
+        else if (a.length() > b.length()) return flag ^ 1;
+        for (int i = 0; i < a.length(); ++i) {
+            if (a[i] < b[i]) return flag;
+            else if (a[i] > b[i]) return flag ^ 1;
+            else continue;
+        }
+    }
+    return 1;
+}
+
+bool operator > (const string &a, const string &b)
+{
+    if (a[0] == '-' && b[0] != '-') return 0; // negative < positive
+    else if (a[0] != '-' && b[0] == '-') return 1; // positive > negative
+    else {
+        int flag = (a[0] == '-') ? 1 : 0;
+        string A = (a[0] == '-') ? a.substr(1, a.length()) : a.substr(0, a.length());
+        string B = (b[0] == '-') ? b.substr(1, b.length()) : b.substr(0, b.length());
+        if (a.length() < b.length()) return flag;
+        else if (a.length() > b.length()) return flag ^ 1;
+        for (int i = 0; i < a.length(); ++i) {
+            if (a[i] < b[i]) return flag;
+            else if (a[i] > b[i]) return flag ^ 1;
+            else continue;
+        }
+    }
+    return 0;
+}
+
+bool operator >= (const string &a, const string &b)
+{
+    if (a[0] == '-' && b[0] != '-') return 0;
+    else if (a[0] != '-' && b[0] == '-') return 1;
+    else {
+        int flag = (a[0] == '-') ? 1 : 0;
+        string A = (a[0] == '-') ? a.substr(1, a.length()) : a.substr(0, a.length());
+        string B = (b[0] == '-') ? b.substr(1, b.length()) : b.substr(0, b.length());
+        if (a.length() < b.length()) return flag;
+        else if (a.length() > b.length()) return flag ^ 1;
+        for (int i = 0; i < a.length(); ++i) {
+            if (a[i] < b[i]) return flag;
+            else if (a[i] > b[i]) return flag ^ 1;
+            else continue;
+        }
+    }
+    return 1;
 }
 
 string operator + (const string& a, const string& b)
@@ -75,9 +141,10 @@ string operator - (const string& a, const string& b)
         B = b.substr(1, b.length());
         return B - A;
     }
-    else if (a[0] == '-' && b[0] != '-') { // -a - b = (-a) + (-b)
-        A = a;
+    else if (a[0] == '-' && b[0] != '-') { // -a - b = -(a + b)
+        A = a.substr(1, a.length());
         B = b;
+        //cout << A + B << endl;
         return (A + B).insert(0, "-");
     }
     else if (a[0] != '-' && b[0] == '-') { // a - (-b) = a + b
@@ -88,7 +155,7 @@ string operator - (const string& a, const string& b)
     else { // a - b
         A = a, B = b;
         int flag = 0;
-        if (cmp(A, B) == -1) swap(A, B), flag = 1;
+        if (A < B) swap(A, B), flag = 1;
         reverse(A.begin(), A.end());
         reverse(B.begin(), B.end());
         int L1 = A.length(), L2 = B.length();
@@ -146,14 +213,13 @@ string operator * (const string& a, const string& b)
     return C;
 }
 
-
 string operator / (const string& a, const string& b)
 {
     string A = a;
     string B = b;
     if (B == "0") return "false";
-    if (cmp(A, B) < 0) return "0";
-    else if (cmp(A, B) == 0) return "1";
+    if (A < B) return "0";
+    else if (A == B) return "1";
     else {
         int L1 = A.length(), L2 = B.length();
         string C = "";
@@ -162,21 +228,25 @@ string operator / (const string& a, const string& b)
             string x = string(1, A[i]);
             temp = temp + x;
             int cnt = 0;
-            while (cmp(temp, B) >= 0) temp = temp - B, cnt++;
+            while (temp >= B) {
+                temp = temp - B, cnt++;
+            }
             temp = temp * "10";
             C += cnt + '0';
         }
         int pos = 0;
         while (C[pos] == '0') pos++;
+        //cout << C << endl;
         return C.substr(pos, C.length() - pos + 1);
     }
 }
 
-
 string operator % (const string& a, const string& b)
 {
     if (b == "0") return "false";
-    return a - a / b * b;
+    string A = a;
+    while (A[0] == '-') A = A + b;
+    return A - A / b * b;
 }
 
 
