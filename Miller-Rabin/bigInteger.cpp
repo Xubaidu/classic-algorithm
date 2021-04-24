@@ -47,7 +47,6 @@ int main()
     }
     return 0;
 }
-
 bool operator < (const string &a, const string &b)
 {
     if (a[0] == '-' && b[0] != '-') return 1; // negative < positive
@@ -131,14 +130,13 @@ string operator + (const string& a, const string& b)
     else if (a[0] == '-' && b[0] != '-') return b - a.substr(1, a.length()); // -a + b = b - a
     else if (a[0] != '-' && b[0] == '-') return a - b.substr(1, b.length()); // a + (-b) = a - b
     else flag = 0; // a + b
-    string A = "", B = "";
-    A = flag ? a.substr(1, a.length()) : a;
-    B = flag ? b.substr(1, b.length()) : b;
+    string A = flag ? a.substr(1, a.length()) : a;
+    string B = flag ? b.substr(1, b.length()) : b;
     reverse(A.begin(), A.end());
     reverse(B.begin(), B.end());
     if (A.length() < B.length()) swap(A, B);
     int L1 = A.length(), L2 = B.length();
-    string C = "";
+    string C;
     int now = 0, up = 0;
     for (int i = 0; i < L1; ++i) {
         if (i < L2) now = up + A[i] - '0' + B[i] -'0';
@@ -155,8 +153,8 @@ string operator + (const string& a, const string& b)
 
 string operator - (const string& a, const string& b)
 {
-    string A = "";
-    string B = "";
+    string A;
+    string B;
     if (a[0] == '-' && b[0] == '-') { // -a - (-b) = b - a
         A = a.substr(1, a.length());
         B = b.substr(1, b.length());
@@ -181,7 +179,7 @@ string operator - (const string& a, const string& b)
         reverse(B.begin(), B.end());
         int L1 = A.length(), L2 = B.length();
         int now = 0, lend = 0;
-        string C = "";
+        string C;
         for (int i = 0; i < L1; ++i) {
             if (i < L2) now = lend + (A[i] - '0') - (B[i] - '0');
             else now = lend + (A[i] - '0');
@@ -215,7 +213,7 @@ string operator * (const string& a, const string& b)
     for (int i = 0; i < L1; ++i)
         for (int j = 0; j < L2; ++j)
             arr[i + j] += (A[i] - '0') * (B[j] - '0');
-    string C = "";
+    string C;
     int up = 0;
     for (int i = 0; i < L1 + L2; ++i) {
         int now = up + arr[i];
@@ -243,7 +241,7 @@ string operator / (const string& a, const string& b)
     else if (A == B) return "1";
     else {
         int L1 = A.length(), L2 = B.length();
-        string C = "";
+        string C;
         string temp = "0";
         for (int i = 0; i < L1; ++i) {
             string x = string(1, A[i]);
