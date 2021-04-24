@@ -47,6 +47,9 @@ struct PRK
         p(_p), q(_q), d(_d) {}
 };
 
+void genBigInt(const int num, const int L, vector<int128> &vec);
+int128 exgcd(int128 a, int128 b, int128 &x, int128 &y);
+int128 get_inv(int128 &a, int128 &m);
 string dec2bin(const int128 &num);
 void genKey(PBK &pbk, PRK &prk, const int &L);
 int128 RSA(const string &plaintext, const PBK &pbk);
