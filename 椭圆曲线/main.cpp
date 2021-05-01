@@ -31,6 +31,15 @@ public:
     int getOrder(pii &P); // 获取点 P 的阶
 };
 
+/* MOD 域上的运算 */
+int qpow(int a, int b, int MOD);
+int addMOD(int a, int b, int MOD);
+int subMOD(int a, int b, int MOD);
+int mulMOD(int a, int b, int MOD);
+int getInv(int x, int MOD);
+void out(pii &P);
+
+/* 创造公私钥，加密，解密 */
 struct publicKey
 {
     EllipticCurve E;
@@ -55,18 +64,10 @@ struct cipherText
     cipherText(int _x, int _y, int _c): x(_x), y(_y), c(_c) {}
 };
 
-int qpow(int a, int b, int MOD);
-int addMOD(int a, int b, int MOD);
-int subMOD(int a, int b, int MOD);
-int mulMOD(int a, int b, int MOD);
-int getInv(int x, int MOD);
-void out(pii &P);
-
 void genKey(publicKey &pbk, privateKey &prk, pii P, EllipticCurve &E);
 cipherText encryption(publicKey &pbk, int m);
 int decryption(publicKey &pbk, privateKey &prk, cipherText &cipher);
 
-int cnt;
 int main()
 {
     srand((unsigned)time(nullptr));
@@ -228,7 +229,6 @@ cipherText encryption(publicKey &pbk, int m)
 {
     int order = pbk.E.getOrder(pbk.P);
     int r = rand() % (order - 2) + 2;
-    cnt = r;
     pii rP = pbk.E.getNP(pbk.P, r);
     pii rQ = pbk.E.getNP(pbk.Q, r);
     int c = mulMOD(m, rQ.fi, pbk.E.getMOD());
