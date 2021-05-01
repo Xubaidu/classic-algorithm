@@ -18,7 +18,7 @@ public:
     int getMOD();
     EllipticCurve();
     EllipticCurve(int _a, int _b, int _MOD);
-    void showEllipticCurver();
+    void showEllipticCurver(); // 输出椭圆曲线的解析式
     void getAllPoints(); // 获取椭圆曲线上所有的点
     void showAllPoints(); // 输出椭圆曲线上所有的点
     int getTangentAtPoint(pii &P); // 获取点 P 处的切线斜率
