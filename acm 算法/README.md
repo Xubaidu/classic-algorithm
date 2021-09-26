@@ -1,8 +1,8 @@
-# classic-algorithm
+# acm algorithm
 
 这是一个记录，也是一个将要填的坑
 
-github 不兼容 latex，在 vscode 打开更佳
+github 不兼容 latex，在 markdown 编辑器打开更佳，例如使用 vscode
 
 ## 记录
 
