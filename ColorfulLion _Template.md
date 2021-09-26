@@ -1,8 +1,6 @@
-Algorithm Template
+## Algorithm Template
 
-Chenyang\ Xu
-
-[toc]
+## Chenyang\ Xu
 
 ---
 
