@@ -1,6 +1,6 @@
 ## Algorithm Template
 
-## Chenyang\ Xu
+## Chenyang Xu
 
 ---
 
