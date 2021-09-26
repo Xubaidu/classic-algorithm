@@ -1,6 +1,6 @@
-# $\textbf{Algorithm\ Template}$
+Algorithm Template
 
-$\textbf{Chenyang\ Xu}$
+Chenyang\ Xu
 
 [toc]
 
