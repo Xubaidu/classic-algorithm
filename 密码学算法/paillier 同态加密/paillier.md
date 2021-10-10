@@ -10,7 +10,7 @@
 
 ### $1.2$ 加密
 
-将明文 $m$ 映射成 $0\leq m < n$
+将明文 $m$ 映射成正整数
 
 选取 $r\in \mathbb{Z_{n}^{*}}$，这意味着 $(r,\ n) = 1$
 
@@ -24,14 +24,26 @@
 
 >$paillier$ 算法的正确性基于以下事实
 $$
-(1 + x)^{n}\equiv 1 + nx\ (mod\ n)
+(1 + n)^{x}\equiv 1 + nx\ (mod\ n^2)
 $$
 
-由 $\lambda = [p - 1,\ q - 1]$，所以对于 $x\in \mathbb{Z_{n}}$，满足 $x^{\lambda}\equiv 1\ (mod\ p),\ x^{\lambda}\equiv 1\ (mod\ q)$，所以 $x^{\lambda}\equiv 1\ (mod\ n)$，这是因为 $n = [p,\ q]$
+由
+
+$$
+\lambda = [p - 1,\ q - 1] = \frac{(p - 1)(q - 1)}{(p - 1,\ q - 1)}
+$$
+
+所以对于 $\forall v\in \mathbb{Z}$，满足
+
+$$
+v^{\lambda}\equiv 1\ (mod\ p),\ v^{\lambda}\equiv 1\ (mod\ q)
+$$
+
+所以 $v^{\lambda}\equiv 1\ (mod\ n)$，这是因为 $n = pq$ 且 $(p, q) = 1$
 
 所以有 $g^{\lambda}\equiv 1\ (mod\ n),\ r^{\lambda}\equiv 1\ (mod\ n)$
 
-不妨设 $g = 1 + qn,\ r = 1 + q'n$，满足 $q,\ q'\in \mathbb{Z}$
+不妨设 $g^{\lambda} = 1 + qn,\ r^{\lambda} = 1 + q'n$，满足 $q,\ q'\in \mathbb{Z}$
 
 计算
 
@@ -83,7 +95,7 @@ $$
 
 所以对 $g$ 的随机选取，转化为对 $k\in \mathbb{Z_{n}^{*}}$ 的随机选取
 
-### $1.6$ 同态性
+### $1.6$ 加法同态性
 
 考虑加密 $m_{1} + m_{2}$，得到
 
@@ -120,7 +132,9 @@ $$
 Dec(Enc(m_{1})\cdot Enc(m_{2})) = m_{1} + m_{2}
 $$
 
-满足同态
+满足加法同态
+
+至于为什么是加法同态，是因为我们对明文的操作是加法
 
 ## $2.$ 问题描述
 
