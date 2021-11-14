@@ -7,7 +7,7 @@ class Set {
     vector<int> pre;
     vector<int> rk;
 public:
-    Set(int _n): n(_n), pre(vector<int>(_n + 1)), rk(vector<int>(_n + 1))
+    Set(int _n): n(_n), pre(_n + 1), rk(_n + 1)
     {            
         for (int i = 0; i <= n; ++i) rk[i] = 1, pre[i] = i;
     }
