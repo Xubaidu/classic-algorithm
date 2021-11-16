@@ -1,5 +1,7 @@
 ## Algorithm Template
 
+[toc]
+
 ## Chenyang Xu
 
 ---
