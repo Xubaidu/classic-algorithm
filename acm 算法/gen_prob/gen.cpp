@@ -25,7 +25,7 @@ public:
         system(command1.c_str());
         system(command2.c_str());
     }
-    const int Solve(const int n, const int k, const vector<int>& a) const
+    int Solve(const int n, const int k, const vector<int>& a) const
     {
         vector<int> sum(n + 1);
         for (int i = 1; i <= n; ++i) {
@@ -38,16 +38,16 @@ public:
         }
         return ans;
     }
-    const InputData* Gen() const
+    shared_ptr<InputData> Gen() const
     {
         int n = rand() % MAXN + 1;
         int k = rand() % (n - 1) + 1;
         vector<int> vec(n + 1);
         for (int i = 1; i <= n; ++i) vec[i] = rand() % N + 1;
-        InputData* input = new InputData(n, k, vec);
+        auto input(make_shared<InputData>(n, k, vec));
         return input;
     }
-    void WriteInFile(const InputData* input) const
+    void WriteInFile(const shared_ptr<InputData>& input) const
     {
         const string inFileName("./data/" + to_string(idx) + ".in");
         ofstream ofs(inFileName.c_str());
@@ -70,9 +70,9 @@ public:
         ofs << ans << "\n";
         ofs.close();
     }
-    void Automata()
+    void Automata() const
     {
-        const InputData* input = Gen();
+        auto input = Gen();
         int ans = Solve(input->n, input->k, input->a);
         WriteInFile(input);
         WriteOutFile(ans);
@@ -83,15 +83,15 @@ int main()
 {
     for (int i = 1; i <= 20; ++i) {
         if (i <= 6) {
-            GenProb* GP = new GenProb(i, MAXN1);
+            auto GP(make_unique<GenProb>(i, MAXN1));
             GP->Automata();
         }
         else if (i <= 12) {
-            GenProb* GP = new GenProb(i, MAXN2);
+            auto GP(make_unique<GenProb>(i, MAXN2));
             GP->Automata();
         }
         else {
-            GenProb* GP = new GenProb(i, MAXN3);
+            auto GP(make_unique<GenProb>(i, MAXN3));
             GP->Automata();
         }
     }
