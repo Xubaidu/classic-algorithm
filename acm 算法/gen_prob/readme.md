@@ -7,7 +7,7 @@
 - ```Solve``` 接收输入数据，返回输出数据
 - ```Gen``` 创造输入数据
 - ```WriteInFile``` 负责将输入写入 ```.in``` 文件
-- ```WriteOutFile``` 负责将出写入 ```.out``` 文件
+- ```WriteOutFile``` 负责将输出写入 ```.out``` 文件
 - ```Automata``` 负责业务逻辑调用，自动化执行
 
 输入数据封装在 ```InputData``` 里面
